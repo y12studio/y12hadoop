@@ -54,13 +54,7 @@ $ protoc --version
 libprotoc 2.5.0
 
 ```
-## user and group
 
-```
-sudo addgroup hadoop
-sudo adduser --ingroup hadoop hduser
-sudo adduser hduser sudo
-```
 
 ## build hadoop
 
@@ -129,12 +123,100 @@ $ mvn package -Pdist,native -DskipTests -Dtar
 [INFO] Apache Hadoop Tools ............................... SUCCESS [0.024s]
 [INFO] Apache Hadoop Distribution ........................ SUCCESS [1:01.998s]
 
-$ file hadoop-dist/target/hadoop-2.4.0/lib/native/*
+$ cd hadoop-dist
+$ file target/hadoop-2.4.0/lib/native/*
+$ export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
+$ target/hadoop-2.4.0/bin/hadoop version
+Hadoop 2.4.0
+Subversion https://github.com/apache/hadoop-common -r 23f5c1d3bf46d0ed8429d579319efddef4a7d641
+$ mv target/hadoop-2.4.0.tar.gz target/hadoop-2.4.0-y12.tar.gz
+
 ```
 
-## configure 
+## configure hadoop
 
-TODO
+[Hadoop 2.1.0 beta Single Node and Ubuntu 13.04 server Y12 Studio](http://y12.tw/wp/2013/08/hadoop-2-1-0-beta-single-node-and-ubuntu-13-04-server/)
+
+ipv6 disable
+```
+$ cat /etc/sysctl.conf
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.lo.disable_ipv6 = 1
+$ sudo sysctl -p
+$ cat /proc/sys/net/ipv6/conf/all/disable_ipv6
+1
+```
+create user and group
+```
+$ sudo addgroup hadoop
+$ sudo adduser --ingroup hadoop hduser
+$ sudo adduser hduser sudo
+$ su - hduser
+$ ssh-keygen -t rsa -P ''
+...
+Your identification has been saved in /home/hduser/.ssh/id_rsa.
+Your public key has been saved in /home/hduser/.ssh/id_rsa.pub.
+...
+$ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+$ ssh localhost
+```
+login hduser and download hadoop
+```
+$ cd ~
+$ wget http://0.y12.tw/hadoop-2.4.0-y12.tar.gz
+$ sudo tar vxzf hadoop-2.4.0-y12.tar.gz -C /usr/local
+$ cd /usr/local
+$ sudo mv hadoop-2.4.0/ hadoop
+$ sudo chown -R hduser:hadoop hadoop
+```
+env setting
+```
+$ cat ~/.bashrc
+export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
+export HADOOP_INSTALL=/usr/local/hadoop
+export PATH=$PATH:$HADOOP_INSTALL/bin
+export PATH=$PATH:$HADOOP_INSTALL/sbin
+export HADOOP_MAPRED_HOME=$HADOOP_INSTALL
+export HADOOP_COMMON_HOME=$HADOOP_INSTALL
+export HADOOP_HDFS_HOME=$HADOOP_INSTALL
+export YARN_HOME=$HADOOP_INSTALL
+
+$ cat /usr/local/hadoop/etc/hadoop/hadoop-env.sh
+export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
+$ cd ~
+$ hadoop version
+Hadoop 2.4.0
+Subversion https://github.com/apache/hadoop-common -r 23f5c1d3bf46d0ed8429d579319efddef4a7d641
+```
+xml setting
+```
+$ cd /usr/local/hadoop/etc/hadoop
+$ wget https://raw.githubusercontent.com/y12studio/y12hadoop/master/conf/hadoop240/core-site.xml -O core-site.xml
+$ wget https://raw.githubusercontent.com/y12studio/y12hadoop/master/conf/hadoop240/yarn-site.xml -O yarn-site.xml
+$ wget https://raw.githubusercontent.com/y12studio/y12hadoop/master/conf/hadoop240/mapred-site.xml -O mapred-site.xml
+$ wget https://raw.githubusercontent.com/y12studio/y12hadoop/master/conf/hadoop240/hdfs-site.xml -O hdfs-site.xml
+$ cd ~
+$ mkdir -p mydata/hdfs/namdnode
+$ mkdir -p mydata/hdfs/datanode
+
+```
+start service
+```
+$ hdfs namenode -format
+$ start-dfs.sh
+$ start-yarn.sh
+$ jps
+3749 Jps
+2643 NameNode
+2886 DataNode
+3160 SecondaryNameNode
+3296 ResourceManager
+$ sudo netstat -plten | grep java
+```
+
+[hadoop 2.1.0 beta hdfs remote write Y12 Studio](http://y12.tw/wp/2013/09/hadoop-2-1-0-beta-hdfs-remote-write/)
+
 
 ## test
 
