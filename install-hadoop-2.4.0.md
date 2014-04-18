@@ -4,7 +4,11 @@ Install hadoop 2.4.0
 - [hadoop-2.1.0-beta.x86_64.tar.gz 64-bit native library Y12 Studio](http://y12.tw/wp/2013/09/diy-hadoop-2-1-0-beta-x86_64-tar-gz-64-bit-native-library/)
 
 
+
+
 ## os setup
+
+Update [Build Hadoop 2.4 on Ubuntu 14.04 LTS · Issue #5](https://github.com/y12studio/y12hadoop/issues/5)
 
 download ubutnu 12.04.4 x64 iso ,boot vm with bridge network interface.
 
