@@ -10,3 +10,7 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+projects/zookeeper-curator/.classpath
+projects/zookeeper-curator/.project
+projects/zookeeper-curator/.settings/org.eclipse.jdt.core.prefs
+projects/zookeeper-curator/.settings/org.eclipse.m2e.core.prefs
