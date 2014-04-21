@@ -3,7 +3,7 @@
 # ref https://github.com/sequenceiq/hadoop-docker/blob/master/Dockerfile
 # git clone https://github.com/y12studio/y12hadoop
 # cd y12hadoop/docker/v240/
-# sudo docker.io -t="y13/hadoop240" .
+# sudo docker.io build -t="y13/hadoop240" .
 # 
 FROM y13/ubuntu-java7
 MAINTAINER Y12STUDIO
