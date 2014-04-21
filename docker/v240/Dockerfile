@@ -1,8 +1,15 @@
 # hadoop 2.4.0 native 64 bit on Ubuntu14.04/Oracle Java7
-# sudo docker.io build -t="y13/hadoop240:conf" .
+# y13/ubuntu-java7 image base on https://github.com/y12studio/bkbc-tools/issues/27
+# ref https://github.com/sequenceiq/hadoop-docker/blob/master/Dockerfile
+# git clone https://github.com/y12studio/y12hadoop
+# cd y12hadoop/docker/v240/
+# sudo docker.io build -t="y13/hadoop240" .
 # 
-FROM y13/hadoop240:src
+FROM y13/ubuntu-java7
 MAINTAINER Y12STUDIO
+# hadoop
+RUN curl -s http://0.y12.tw/hadoop240/hadoop-2.4.0.tar.gz | tar -xz -C /usr/local/
+RUN cd /usr/local && ln -s hadoop-2.4.0 hadoop
 
 ENV HADOOP_PREFIX /usr/local/hadoop
 # open jdk
