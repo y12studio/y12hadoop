@@ -201,7 +201,7 @@ $ wget https://raw.githubusercontent.com/y12studio/y12hadoop/master/conf/hadoop2
 $ wget https://raw.githubusercontent.com/y12studio/y12hadoop/master/conf/hadoop240/mapred-site.xml -O mapred-site.xml
 $ wget https://raw.githubusercontent.com/y12studio/y12hadoop/master/conf/hadoop240/hdfs-site.xml -O hdfs-site.xml
 $ cd ~
-$ mkdir -p mydata/hdfs/namdnode
+$ mkdir -p mydata/hdfs/namenode
 $ mkdir -p mydata/hdfs/datanode
 
 ```
